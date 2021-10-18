@@ -1,0 +1,8 @@
+@import 'variables';
+@import 'mixins';
+
+h1 {
+  font: var(--font-title);
+  color: var(--color-text-main);
+  @include center-all;
+}

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+:root {
+  --font-fallback: -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-family: 'Play', var(--font-fallback);
+  //Fonts
+  --font-title: bold 36px/42px var(--font-family);
+  --font-subtitle: normal 30px/35px var(--font-family);
+  --font-nav: normal 24px/28px var(--font-family);
+  --font-nav-bold: bold 24px/28px var(--font-family);
+  --font-text: normal 18px/21px var(--font-family);
+  --font-text-bold: bold 18px/21px var(--font-family);
+
+  //Colors
+  --color-black: #242424;
+  --color-white: #fff;
+  --color-grey: #b4b4b4;
+  --color-green: #5d8b33;
+  --color-green-darck: #194209;
+  --color-green-light: #d7e0c1;
+  --color-shadow: rgba(93, 139, 51, 0.25);
+
+  //Colors-text
+  --color-text-main: var(--color-black);
+  --color-text-helper: var(--color-grey);
+
+  //Shadows
+  --shadow-nav: 0px 4px 20px var(--color-shadow);
+  --shadow-input-default: 0px 0px 10px var(--color-shadow);
+  --shadow-input-active: 0px 0px 4px var(--color-green);
+
+  //Radius
+  --radius-s: 4px;
+  --radius-m: 10px;
+
+  //Buttons
+  --button-font-color: var(--color-white);
+  --buttont-font: var(--font-text-bold);
+  --button-padding: 4px 38px;
+  --button-default: var(--color-green);
+  --button-hover: var(--color-green-light);
+  --button-active: var(--color-green-darck);
+  --button-disable: var(--color-grey);
+
+  //Spacing
+  --space-xs: 2px;
+  --space-s: 4px;
+  --space-m: 10px;
+  --space-l: 20px;
+  --space-xl: 30px;
+  --space-xxl: 40px;
+}
