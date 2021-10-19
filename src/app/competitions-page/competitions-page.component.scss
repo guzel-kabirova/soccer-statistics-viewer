@@ -1,0 +1,115 @@
+.page-name {
+  margin: 0 0 30px;
+  font: var(--font-title);
+  color: var(--color-black);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  .search {
+    padding: 4px 10px 5px;
+    width: 240px;
+    height: 30px;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    border-radius: var(--radius-s);
+    box-shadow: var(--shadow-input-default);
+    box-sizing: border-box;
+    font-family: inherit;
+
+    &::placeholder {
+      font: var(--font-text);
+      color: var(--color-grey);
+    }
+
+    &:focus, &:active {
+      outline: none;
+      box-shadow: var(--shadow-input-active);
+    }
+  }
+
+  .btn {
+    cursor: pointer;
+    border: none;
+    padding: var(--button-padding);
+    background-color: var(--button-default);
+    color: var(--button-font-color);
+    font: var(--buttont-font);
+    height: 30px;
+    border-radius: var(--radius-s);
+    margin-left: 10px;
+
+    &:hover:enabled {
+      background-color: var(--button-hover);
+    }
+
+    &:focus:enabled, &:active:enabled {
+      outline: none;
+      background-color: var(--button-active);
+    }
+
+    &:active:enabled {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      background-color: var(--button-disable);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.table {
+  width: 100%;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  box-shadow: var(--shadow-input-default);
+
+  .table-head {
+    height: 40px;
+
+    tr {
+      border-bottom: 4px solid var(--color-green-light);
+      th {
+        background-color: var(--color-green-darck);
+        color: var(--color-white);
+        padding: 10px;
+        font: var(--font-text-bold);
+        border-right: 2px solid var(--color-green-light);
+        &:last-child {
+          border-right: 0;
+        }
+      }
+
+    }
+
+
+  }
+
+  .table-body {
+    background-color: var(--color-white);
+    color: var(--color-black);
+
+    tr {
+      border-bottom: 4px solid var(--color-green-light);
+      &:last-child {
+        border-bottom: 0;
+      }
+      td {
+        text-align: center;
+        padding: 10px;
+        font: var(--font-text);
+      }
+
+      &:hover {
+        box-shadow: var(--shadow-input-active);
+      }
+    }
+
+  }
+}
+
