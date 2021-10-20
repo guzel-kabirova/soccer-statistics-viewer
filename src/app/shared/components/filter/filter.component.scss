@@ -1,0 +1,14 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  label {
+    font: var(--font-text);
+    margin-right: 10px;
+  }
+
+  .date-input {
+    width: 180px;
+  }
+}

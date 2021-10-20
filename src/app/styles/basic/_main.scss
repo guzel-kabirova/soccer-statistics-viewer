@@ -3,3 +3,33 @@
  * {
    box-sizing: border-box;
  }
+
+.page-name {
+  margin: 0 0 30px;
+  font: var(--font-title);
+  color: var(--color-black);
+}
+
+
+.input {
+  padding: 4px 10px 5px;
+  height: 30px;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: none;
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-input-default);
+  box-sizing: border-box;
+  font-family: inherit;
+  margin-right: 10px;
+
+  &::placeholder {
+    font: var(--font-text);
+    color: var(--color-grey);
+  }
+
+  &:focus, &:active {
+    outline: none;
+    box-shadow: var(--shadow-input-active);
+  }
+}

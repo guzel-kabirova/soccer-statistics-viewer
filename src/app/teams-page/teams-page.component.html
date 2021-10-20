@@ -1,2 +1,10 @@
-<p>teams-page works!</p>
-<router-outlet></router-outlet>
+<h1 class="page-name">Команды</h1>
+<app-input></app-input>
+<app-table [tableData]="[
+{name: 'Название', width: '20%'},
+{name: 'Основана', width: '12%'},
+{name: 'Эмблема', width: '20%'},
+{name: 'Место тренировок', width: '20%'},
+{name: 'Контакты', width: '30%'},
+]"></app-table>
+

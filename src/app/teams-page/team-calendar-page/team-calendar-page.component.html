@@ -1,1 +1,9 @@
-<p>team-calendar-page works!</p>
+<h1 class="page-name">Конкретная команда</h1>
+<app-filter></app-filter>
+<app-table [tableData]="[
+{name: 'Соревнование', width: '26%'},
+{name: 'Сезон', width: '26%'},
+{name: 'Дом', width: '18%'},
+{name: 'Гость', width: '18%'},
+{name: 'Счет', width: '12%'},
+]"></app-table>

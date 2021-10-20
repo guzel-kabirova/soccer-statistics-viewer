@@ -5,8 +5,8 @@
        width="30"
   >
   <ul>
-    <li><a href="#" class="active-link">Соревнования</a></li>
-    <li><a href="#">Команды</a></li>
+    <li><a [routerLink]="['/competitions']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:false}">Соревнования</a></li>
+    <li><a [routerLink]="['/teams']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:false}">Команды</a></li>
   </ul>
   <div class="line"></div>
 </nav>

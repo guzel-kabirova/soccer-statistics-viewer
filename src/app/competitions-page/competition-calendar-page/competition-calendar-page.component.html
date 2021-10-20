@@ -1,1 +1,7 @@
-<p>competition-calendar-page works!</p>
+<h1 class="page-name">Конкретное соревнование</h1>
+<app-filter></app-filter>
+<app-table [tableData]="[
+{name: 'Период проведения', width: '41%'},
+{name: 'Кол-во дней', width: '18%'},
+{name: 'Победитель', width: '41%'},
+]"></app-table>

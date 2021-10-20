@@ -1,0 +1,10 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  .search-input {
+    width: 240px;
+    box-sizing: border-box;
+  }
+}
