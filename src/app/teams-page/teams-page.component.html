@@ -1,10 +1,35 @@
 <h1 class="page-name">Команды</h1>
-<app-input></app-input>
-<app-table [tableData]="[
-{name: 'Название', width: '20%'},
-{name: 'Основана', width: '12%'},
-{name: 'Эмблема', width: '20%'},
-{name: 'Место тренировок', width: '20%'},
-{name: 'Контакты', width: '30%'},
-]"></app-table>
+<app-input (onSearch)="startSearch($event)"></app-input>
+<app-table [thead]="thead">
+  <tr *ngFor="let team of teams$ | async"
+      [routerLink]="['/teams', team.id]"
+  >
+    <td>
+      {{team.teamName.name}}<br>
+      {{team.teamName.shortName}}<br>
+      {{team.teamName.tla}}
+    </td>
+    <td>{{team.founded}}</td>
+    <td><img src="{{team.crestUrl}}" height="40" alt="Эмблема"><br> {{team.clubColors}}</td>
+    <td>{{team.area}}</td>
+    <td>
+      <div class="contact" *ngIf="team.contacts.address">
+        {{team.contacts.address}}
+        <img src="assets/icons/location.svg" width="16" alt="Адрес">
+      </div>
+      <div class="contact" *ngIf="team.contacts.website">
+        {{team.contacts.website}}
+        <img src="assets/icons/website.svg" width="16" alt="Сайт">
+      </div>
+      <div class="contact" *ngIf="team.contacts.phone">
+        {{team.contacts.phone}}
+        <img src="assets/icons/phone.svg" width="16" alt="Телефон">
+      </div>
+      <div class="contact" *ngIf="team.contacts.email">
+        {{team.contacts.email}}
+        <img src="assets/icons/mail.svg" width="16" alt="Почта">
+      </div>
+    </td>
+  </tr>
+</app-table>
 

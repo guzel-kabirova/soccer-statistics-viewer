@@ -22,25 +22,4 @@
     }
 
   }
-
-  .table-body {
-    background-color: var(--color-white);
-    color: var(--color-black);
-
-    tr {
-      border-bottom: 2px solid var(--color-green-light);
-      &:last-child {
-        border-bottom: 0;
-      }
-      td {
-        text-align: center;
-        padding: 10px;
-        font: var(--font-text);
-      }
-
-      &:hover {
-        background-color: var(--color-grey-light);
-      }
-    }
-  }
 }

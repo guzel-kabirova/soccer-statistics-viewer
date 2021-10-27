@@ -2,6 +2,10 @@
   <input type="search"
          class="input search-input"
          placeholder="Введите текст..."
+         [(ngModel)]="searchStr"
   >
- <app-button btnText="Поиск"></app-button>
+  <button type="submit"
+          class="btn"
+          (click)="onClick()"
+  >Поиск</button>
 </div>

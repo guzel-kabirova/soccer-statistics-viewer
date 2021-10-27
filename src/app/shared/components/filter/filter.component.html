@@ -1,14 +1,20 @@
 <div class="search-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <label for="from">с</label>
   <input type="date"
          class="input date-input"
          id="from"
+         formControlName="dateFrom"
   >
   <label for="to">по</label>
   <input type="date"
          class="input date-input"
          id="to"
+         formControlName="dateTo"
   >
-  <app-button btnText="Фильтр"></app-button>
+    <button type="submit"
+            class="btn"
+    >Фильтр</button>
+  </form>
 </div>
 

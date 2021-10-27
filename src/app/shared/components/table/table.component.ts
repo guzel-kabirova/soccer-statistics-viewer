@@ -1,4 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AppStoreService } from '../../services/app.store.service';
+import { Observable } from 'rxjs';
 
 export interface TableCell {
   name: string,
@@ -9,9 +11,11 @@ export interface TableCell {
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent{
-@Input() tableData!: TableCell[]
-
+export class TableComponent {
+  @Input() thead!: TableCell[];
+  isFetching$: Observable<boolean> = this.store.isFetching$;
+  constructor(private store: AppStoreService) {
+  }
 }

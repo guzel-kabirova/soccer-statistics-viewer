@@ -5,6 +5,7 @@ import { CompetitionsPageComponent } from './competitions-page/competitions-page
 import { CompetitionCalendarPageComponent } from './competitions-page/competition-calendar-page/competition-calendar-page.component';
 import { TeamsPageComponent } from './teams-page/teams-page.component';
 import { TeamCalendarPageComponent } from './teams-page/team-calendar-page/team-calendar-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,14 @@ const routes: Routes = [
         path: 'teams/:id',
         component: TeamCalendarPageComponent,
       },
+      {
+        path: 'error',
+        component: ErrorPageComponent,
+      },
+      {
+        path: '**',
+        redirectTo: '/error'
+      }
     ],
   },
 ];

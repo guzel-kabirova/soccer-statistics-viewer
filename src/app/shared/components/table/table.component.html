@@ -1,16 +1,12 @@
 <table class="table">
   <thead class="table-head">
   <tr>
-    <th [style.width]="cell.width" *ngFor="let cell of tableData">
+    <th [style.width]="cell.width" *ngFor="let cell of thead">
       {{cell.name}}
     </th>
   </tr>
   </thead>
   <tbody class="table-body">
-  <tr>
-    <td *ngFor="let cell of tableData"
-    >Lorem ipsum dolor sit amet.</td>
-
-  </tr>
+  <ng-content></ng-content>
   </tbody>
 </table>
