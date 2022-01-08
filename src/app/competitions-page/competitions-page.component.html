@@ -1,18 +1,42 @@
 <h1 class="page-name">Список соревнований</h1>
 <app-input (onSearch)="startSearch($event)"></app-input>
-<app-table [thead]="thead">
-<ng-container *ngIf="competitions$ | async as competitions">
-    <tr *ngFor="let competition of competitions | search :searchStr"
-        [routerLink]="['/competitions', competition.id]"
-    >
-      <td>{{competition.name}}</td>
-      <td>{{competition.areaName}}</td>
-      <td>{{competition.currentSeason?.start | date: 'dd.MM.yyyy'}}
-        - {{competition.currentSeason?.end | date: 'dd.MM.yyyy'}}</td>
-      <td>{{competition.currentSeason?.matchDays}}</td>
-      <td>{{competition.currentSeason?.winnerName}}</td>
-    </tr>
-</ng-container>
-</app-table>
+
+  <table mat-table [dataSource]="competitions" matSort>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Название</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Area Name Column -->
+    <ng-container matColumnDef="areaName">
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>Локация</th>
+      <td mat-cell *matCellDef="let element"> {{element.areaName}} </td>
+    </ng-container>
+
+    <!-- Current Season Duration Column -->
+    <ng-container matColumnDef="currentSeasonInterval">
+      <th mat-header-cell *matHeaderCellDef>Текущий сезон</th>
+      <td mat-cell *matCellDef="let element"> {{element.currentSeasonInterval}} </td>
+    </ng-container>
+
+    <!-- Match Days Column -->
+    <ng-container matColumnDef="matchDays">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Кол-во дней</th>
+      <td mat-cell *matCellDef="let element"> {{element.matchDays}} </td>
+    </ng-container>
+
+    <!-- Winner Name Column -->
+    <ng-container matColumnDef="winnerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Победитель</th>
+      <td mat-cell *matCellDef="let element"> {{element.winnerName}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row (click)="openMore(row)" *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </table>
+
+
 
 

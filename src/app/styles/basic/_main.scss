@@ -1,5 +1,5 @@
 @import 'variables';
-@import 'mixins';
+@import 'src/app/styles/mixins/mixins';
 
 * {
   box-sizing: border-box;
@@ -17,90 +17,34 @@
   color: var(--color-black);
 }
 
-.input {
-  padding: 4px 10px 5px;
-  height: 30px;
-  background-color: var(--color-white);
-  color: var(--color-black);
-  border: none;
-  border-radius: var(--radius-s);
-  box-shadow: var(--shadow-input-default);
-  box-sizing: border-box;
-  font-family: inherit;
-  margin-right: 10px;
+.mat-table {
+  width: 100%;
+  border-radius: var(--radius-m);
+  overflow: hidden;
 
-  &::placeholder {
-    font: var(--font-text);
-    color: var(--color-grey);
+  .mat-header-cell {
+    color: var(--color-white);
+    background-color: var(--color-green-darck);
+    text-align: center;
+    font: var(--font-text-bold);
   }
 
-  &:focus, &:active {
-    outline: none;
-    box-shadow: var(--shadow-input-active);
+  .mat-sort-header-arrow {
+    color: var(--color-white) !important;
   }
-}
 
-.table-body {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  .mat-sort-header-container {
+    display:flex !important;
+    justify-content:center !important;
+  }
 
-  tr {
-    border-bottom: 2px solid var(--color-green-light);
+  .mat-row .mat-cell {
     cursor: pointer;
-
-    &:last-child {
-      border-bottom: 0;
-    }
-
-    td {
-      text-align: center;
-      padding: 10px;
-      font: var(--font-text);
-
-      .contact {
-        padding: 4px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-          margin: 0 10px;
-          filter: invert(78%) sepia(0%) saturate(0%) hue-rotate(54deg) brightness(93%) contrast(93%);
-        }
-      }
-    }
-
-    &:hover {
-      background-color: var(--color-grey-light);
-    }
-  }
-}
-
-.btn {
-  cursor: pointer;
-  border: none;
-  padding: var(--button-padding);
-  background-color: var(--button-default);
-  color: var(--button-font-color);
-  font: var(--buttont-font);
-  height: 30px;
-  border-radius: var(--radius-s);
-  margin-left: 10px;
-
-  &:hover:enabled {
-    background-color: var(--button-hover);
+    text-align: center;
+    font: var(--font-text);
   }
 
-  &:focus:enabled {
-    outline: none;
-  }
-
-  &:active:enabled {
-    transform: scale(0.98);
-    background-color: var(--button-active);
-  }
-
-  &:disabled {
-    background-color: var(--button-disable);
-    cursor: not-allowed;
+  .mat-row:hover .mat-cell {
+    background-color: var(--color-grey-light);
   }
 }

@@ -21,7 +21,6 @@ export class AppApiService {
   }
 
   getCompetitions(): Observable<GetCompetitionsResponse> {
-    this.store.toggleIsFetching();
     return this.http.get<GetCompetitionsResponse>(`${API_URL}competitions?plan=TIER_ONE`)
       .pipe(tap(res => {
         const competitions = res.competitions.map(competition => new CompetitionModel(competition))
@@ -30,7 +29,6 @@ export class AppApiService {
   }
 
   getCurrentCompetition(id: string, payload?: MyFormData): Observable<GetMatchesResponse> {
-    this.store.toggleIsFetching();
     return this.http.get<GetMatchesResponse>(`${API_URL}competitions/${id}/matches${payload ? `?dateFrom=${payload.dateFrom}&dateTo=${payload.dateTo}` : ''}`)
       .pipe(tap(res => {
         const competitionName = res.competition.name;
@@ -42,7 +40,6 @@ export class AppApiService {
   }
 
   getTeams(): Observable<GetTeamsResponse> {
-    this.store.toggleIsFetching();
     return this.http.get<GetTeamsResponse>(`${API_URL}teams`)
       .pipe(tap(res => {
         const teams = res.teams.map(team => new TeamModel(team));
@@ -51,7 +48,6 @@ export class AppApiService {
   }
 
   getCurrentTeam(id: string, payload?: MyFormData): Observable<GetMatchesResponse> {
-    this.store.toggleIsFetching();
     return this.http.get<GetMatchesResponse>(`${API_URL}teams/${id}/matches${payload ? `?dateFrom=${payload.dateFrom}&dateTo=${payload.dateTo}` : ''}`)
       .pipe(tap(res => {
         this.http.get<{name: string}>(`${API_URL}teams/${id}`)

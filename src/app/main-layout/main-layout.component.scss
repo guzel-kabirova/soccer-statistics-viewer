@@ -44,6 +44,21 @@
     padding: 40px 120px;
     min-height: calc(100vh - 80px);
   }
+
+  @media (max-width: 800px) {
+    .container {
+      height: 100vh;
+      padding: 10px 10px;
+    }
+
+    .nav {
+      padding: 25px 10px;
+      .line {
+        left: 15px;
+        right: 10px;
+      }
+    }
+  }
 }
 
 

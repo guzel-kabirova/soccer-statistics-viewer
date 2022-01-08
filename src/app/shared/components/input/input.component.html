@@ -1,11 +1,16 @@
-<div class="search-container">
-  <input type="search"
-         class="input search-input"
+<mat-form-field style="width: 300px" appearance="fill">
+  <mat-label>Поиск</mat-label>
+  <input matInput
+         type="search"
          placeholder="Введите текст..."
-         [(ngModel)]="searchStr"
+         [(ngModel)]="value"
+         (keyup)="search()"
   >
-  <button type="submit"
-          class="btn"
-          (click)="onClick()"
-  >Поиск</button>
-</div>
+  <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+
+
+

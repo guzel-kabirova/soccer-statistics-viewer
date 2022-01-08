@@ -1,1 +1,13 @@
+@use '~@angular/material' as mat;
+@include mat.core();
+
+$soccer-primary: mat.define-palette(mat.$light-green-palette, 800);
+$soccer-accent: mat.define-palette(mat.$pink-palette);
+$soccer-warn: mat.define-palette(mat.$red-palette);
+
+$soccer-theme: mat.define-light-theme($soccer-primary, $soccer-accent, $soccer-warn);
+@include mat.all-component-themes($soccer-theme);
+
 @import 'src/app/styles/basic/main';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

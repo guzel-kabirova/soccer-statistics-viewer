@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CompetitionModel, MatchModel, TeamModel } from '../models/app.model';
 
+
 @Injectable({ providedIn: 'root' })
 export class AppStoreService {
   private competitions: BehaviorSubject<CompetitionModel[]> = new BehaviorSubject<CompetitionModel[]>([]);
@@ -24,9 +25,6 @@ export class AppStoreService {
 
   private competitionArea: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public competitionArea$: Observable<string> = this.competitionArea.asObservable();
-
-  private isFetching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public isFetching$: Observable<boolean> = this.isFetching.asObservable();
 
   setCompetitionsData(competitions: CompetitionModel[]) {
     this.competitions.next(competitions);
@@ -51,13 +49,5 @@ export class AppStoreService {
   setCurCompetitionInfo(competitionName: string, competitionArea: string) {
     this.competitionName.next(competitionName);
     this.competitionArea.next(competitionArea);
-  }
-
-  toggleIsFetching() {
-    if (this.isFetching.getValue()) {
-      this.isFetching.next(false);
-    } else {
-      this.isFetching.next(true);
-    }
   }
 }

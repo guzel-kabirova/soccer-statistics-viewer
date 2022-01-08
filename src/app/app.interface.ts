@@ -1,4 +1,4 @@
 export interface MyFormData {
   dateFrom: string,
-  dateTo: string
+  dateTo: string,
 }

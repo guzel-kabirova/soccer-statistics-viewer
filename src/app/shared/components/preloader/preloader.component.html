@@ -1,3 +1,3 @@
-<div class="preloader">
+<div class="preloader-container" *ngIf="this.preloaderService.isLoading$ | async">
   <img src="assets/icons/preloader.svg" alt="Загрузка">
 </div>

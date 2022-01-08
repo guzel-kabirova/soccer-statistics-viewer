@@ -1,37 +1,66 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { tap } from 'rxjs/operators';
+
 import { AppApiService } from '../shared/services/app.api.service';
-import { Observable } from 'rxjs';
 import { AppStoreService } from '../shared/services/app.store.service';
 import { CompetitionModel } from '../shared/models/app.model';
+import { PreloaderService } from '../shared/components/preloader/preloader.service';
+
 
 @Component({
   selector: 'app-competitions-page',
   templateUrl: './competitions-page.component.html',
-  styleUrls: ['./competitions-page.component.scss'],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompetitionsPageComponent implements OnInit {
-  thead = [
-    { name: 'Название', width: '20%' },
-    { name: 'Локация', width: '20%' },
-    { name: 'Текущий сезон', width: '28%' },
-    { name: 'Кол-во дней', width: '12%' },
-    { name: 'Победитель', width: '20%' },
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
+  displayedColumns: string[] = [
+    'name',
+    'areaName',
+    'currentSeasonInterval',
+    'matchDays',
+    'winnerName',
   ];
 
-  competitions$: Observable<CompetitionModel[]> = this.store.competitions$;
-  searchStr = '';
+  competitions!: MatTableDataSource<CompetitionModel>;
 
-  constructor(private store: AppStoreService,
-              private api: AppApiService) {
+  constructor(
+    private store: AppStoreService,
+    private api: AppApiService,
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private preloaderService: PreloaderService,
+  ) {
   }
 
   ngOnInit() {
-    this.api.getCompetitions()
-      .subscribe(() => this.store.toggleIsFetching());
+    this.preloaderService
+      .showPreloaderUntilComplete(this.api.getCompetitions())
+      .subscribe();
+    this.store.competitions$
+      .pipe(
+        tap(
+          (result: CompetitionModel[]) => {
+            this.competitions = new MatTableDataSource(result);
+            this.competitions.sort = this.sort;
+            this.cd.detectChanges();
+          },
+        ),
+      )
+      .subscribe();
   }
 
   startSearch(searchStr: string) {
-    this.searchStr = searchStr;
+    this.competitions.filter = searchStr.trim().toLowerCase();
+  }
+
+  openMore(row: any) {
+    this.router.navigate(['/competitions', `${row.id}`]);
   }
 }

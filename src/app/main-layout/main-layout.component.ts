@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppStoreService } from '../../services/app.store.service';
+import { AppStoreService } from '../shared/services/app.store.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {
-  isFetching$: Observable<boolean> = this.store.isFetching$;
 
   constructor(private store: AppStoreService) {
   }

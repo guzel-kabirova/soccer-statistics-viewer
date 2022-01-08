@@ -1,35 +1,60 @@
 <h1 class="page-name">Команды</h1>
 <app-input (onSearch)="startSearch($event)"></app-input>
-<app-table [thead]="thead">
-  <tr *ngFor="let team of teams$ | async"
-      [routerLink]="['/teams', team.id]"
-  >
-    <td>
-      {{team.teamName.name}}<br>
-      {{team.teamName.shortName}}<br>
-      {{team.teamName.tla}}
+<table mat-table [dataSource]="teams" matSort>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="teamName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Название</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.teamName}}
     </td>
-    <td>{{team.founded}}</td>
-    <td><img src="{{team.crestUrl}}" height="40" alt="Эмблема"><br> {{team.clubColors}}</td>
-    <td>{{team.area}}</td>
-    <td>
-      <div class="contact" *ngIf="team.contacts.address">
-        {{team.contacts.address}}
+  </ng-container>
+
+  <!-- Founded Column -->
+  <ng-container matColumnDef="founded">
+    <th mat-header-cell *matHeaderCellDef  mat-sort-header>Год основания</th>
+    <td mat-cell *matCellDef="let element"> {{element.founded}} </td>
+  </ng-container>
+
+  <!-- CrestUrl Column -->
+  <ng-container matColumnDef="crestUrl">
+    <th mat-header-cell *matHeaderCellDef>Эмблема</th>
+    <td mat-cell *matCellDef="let element">
+      <img src="{{element.crestUrl}}" height="40" alt="Эмблема"><br>
+      {{element.clubColors}}
+    </td>
+  </ng-container>
+
+  <!-- Area Column -->
+  <ng-container matColumnDef="area">
+    <th mat-header-cell *matHeaderCellDef>Место тренировок</th>
+    <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+  </ng-container>
+
+  <!-- Contacts Column -->
+  <ng-container matColumnDef="contacts">
+    <th mat-header-cell *matHeaderCellDef>Контакты</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="contact" *ngIf="element.contacts.address">
+        {{element.contacts.address}}
         <img src="assets/icons/location.svg" width="16" alt="Адрес">
       </div>
-      <div class="contact" *ngIf="team.contacts.website">
-        {{team.contacts.website}}
+      <div class="contact" *ngIf="element.contacts.website">
+        {{element.contacts.website}}
         <img src="assets/icons/website.svg" width="16" alt="Сайт">
       </div>
-      <div class="contact" *ngIf="team.contacts.phone">
-        {{team.contacts.phone}}
+      <div class="contact" *ngIf="element.contacts.phone">
+        {{element.contacts.phone}}
         <img src="assets/icons/phone.svg" width="16" alt="Телефон">
       </div>
-      <div class="contact" *ngIf="team.contacts.email">
-        {{team.contacts.email}}
+      <div class="contact" *ngIf="element.contacts.email">
+        {{element.contacts.email}}
         <img src="assets/icons/mail.svg" width="16" alt="Почта">
       </div>
     </td>
-  </tr>
-</app-table>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row (click)="openMore(row)" *matRowDef="let row; columns: displayedColumns;" ></tr>
+</table>
 

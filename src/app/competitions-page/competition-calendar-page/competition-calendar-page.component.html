@@ -1,13 +1,33 @@
 <h1 class="page-name">{{competitionName$ | async}}</h1>
   <h2 class="page-subtitle">{{competitionArea$ | async}}</h2>
   <app-filter (onSubmitForm)="startFilter($event)"></app-filter>
-  <app-table [thead]="thead">
-<tr *ngFor="let match of matches$ | async"
-    style="cursor: default"
->
-  <td>{{match.date | date:'short':'':'ru'}}</td>
-  <td>{{match.homeTeamName}}</td>
-  <td>{{match.awayTeamName}}</td>
-  <td>{{match.score}}</td>
-</tr>
-  </app-table>
+
+<table mat-table [dataSource]="matches">
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Дата матча</th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <!-- Home Team Name Column -->
+  <ng-container matColumnDef="homeTeamName">
+    <th mat-header-cell *matHeaderCellDef>Дом</th>
+    <td mat-cell *matCellDef="let element"> {{element.homeTeamName}} </td>
+  </ng-container>
+
+  <!-- Away Team Name Column -->
+  <ng-container matColumnDef="awayTeamName">
+    <th mat-header-cell *matHeaderCellDef>Гость</th>
+    <td mat-cell *matCellDef="let element"> {{element.awayTeamName}} </td>
+  </ng-container>
+
+  <!-- Score Column -->
+  <ng-container matColumnDef="score">
+    <th mat-header-cell *matHeaderCellDef>Счет</th>
+    <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+</table>

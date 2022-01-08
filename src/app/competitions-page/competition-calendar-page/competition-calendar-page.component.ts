@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
 import { AppApiService } from '../../shared/services/app.api.service';
 import { AppStoreService } from '../../shared/services/app.store.service';
-import { Observable } from 'rxjs';
 import { MatchModel } from '../../shared/models/app.model';
 import { MyFormData } from '../../app.interface';
+import { PreloaderService } from '../../shared/components/preloader/preloader.service';
 
 @Component({
   selector: 'app-competition-calendar-page',
@@ -14,16 +16,11 @@ import { MyFormData } from '../../app.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompetitionCalendarPageComponent implements OnInit, OnDestroy {
-  thead = [
-    { name: 'Дата матча', width: '30%' },
-    { name: 'Дом', width: '25%' },
-    { name: 'Гость', width: '25%' },
-    { name: 'Счет', width: '20%' },
-  ];
+  displayedColumns = ['date', 'homeTeamName', 'awayTeamName', 'score'];
 
   competitionName$: Observable<string> = this.store.competitionName$;
   competitionArea$: Observable<string> = this.store.competitionArea$;
-  matches$: Observable<MatchModel[]> = this.store.matchesComp$;
+  matches!: MatchModel[];
   id!: string;
 
   constructor(
@@ -31,6 +28,7 @@ export class CompetitionCalendarPageComponent implements OnInit, OnDestroy {
     private api: AppApiService,
     private store: AppStoreService,
     private router: Router,
+    private preloaderService: PreloaderService,
   ) {
   }
 
@@ -38,21 +36,28 @@ export class CompetitionCalendarPageComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(switchMap(params => {
         this.id = params.id;
-        return this.api.getCurrentCompetition(this.id);
+        return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentCompetition(this.id));
       }))
-      .subscribe(() => this.store.toggleIsFetching());
+      .subscribe();
+    this.store.matchesComp$
+      .pipe(
+        tap(result => this.matches = result),
+      )
+      .subscribe();
   }
 
   startFilter(formData: MyFormData) {
     this.id &&
-    this.api.getCurrentCompetition(this.id, formData)
-      .subscribe(() => {
-          this.router.navigate(['/competitions', this.id], { queryParams: formData });
-          this.store.toggleIsFetching();
-        },
-      );
+    this.preloaderService.showPreloaderUntilComplete(
+      this.api.getCurrentCompetition(this.id, formData)
+        .pipe(
+          tap(() => this.router.navigate(
+            ['/competitions', this.id],
+            { queryParams: formData }),
+          ),
+        ),
+    ).subscribe();
   }
-
 
   ngOnDestroy(): void {
     this.store.setCurCompetitionMatches([]);

@@ -1,38 +1,65 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+
 import { AppApiService } from '../shared/services/app.api.service';
 import { AppStoreService } from '../shared/services/app.store.service';
-import { Observable } from 'rxjs';
 import { TeamModel } from '../shared/models/app.model';
+import { PreloaderService } from '../shared/components/preloader/preloader.service';
+
 
 @Component({
   selector: 'app-teams-page',
   templateUrl: './teams-page.component.html',
-  styleUrls: ['./teams-page.component.scss'],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamsPageComponent implements OnInit {
-  thead = [
-    { name: 'Название', width: '20%' },
-    { name: 'Год основания', width: '12%' },
-    { name: 'Эмблема', width: '20%' },
-    { name: 'Место тренировок', width: '20%' },
-    { name: 'Контакты', width: '30%' },
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
+  displayedColumns: string[] = [
+    'teamName',
+    'founded',
+    'crestUrl',
+    'area',
+    'contacts',
   ];
 
-  teams$: Observable<TeamModel[]> = this.store.teams$;
+  teams!: MatTableDataSource<TeamModel>;
 
   constructor(
     private api: AppApiService,
     private store: AppStoreService,
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private preloaderService: PreloaderService,
   ) {
   }
 
   ngOnInit() {
-    this.api.getTeams()
-      .subscribe(() => this.store.toggleIsFetching());
+    this.preloaderService.showPreloaderUntilComplete(
+      this.api.getTeams()
+    ).subscribe();
+
+    this.store.teams$
+      .pipe(
+        tap((result: TeamModel[]) => {
+          this.teams = new MatTableDataSource(result);
+          this.teams.sort = this.sort;
+          this.cd.detectChanges();
+        }),
+      )
+      .subscribe();
   }
 
-  startSearch(teamName: string) {
+  startSearch(searchStr: string) {
+    this.teams.filter = searchStr.trim().toLowerCase();
+  }
 
+  openMore(row: any) {
+    this.router.navigate(['/teams', `${row.id}`]);
   }
 }

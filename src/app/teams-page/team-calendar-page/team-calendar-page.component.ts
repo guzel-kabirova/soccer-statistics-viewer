@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { AppApiService } from '../../shared/services/app.api.service';
 import { AppStoreService } from '../../shared/services/app.store.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { MatchModel } from '../../shared/models/app.model';
 import { MyFormData } from '../../app.interface';
+import { PreloaderService } from '../../shared/components/preloader/preloader.service';
 
 @Component({
   selector: 'app-team-calendar-page',
@@ -14,15 +16,15 @@ import { MyFormData } from '../../app.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamCalendarPageComponent implements OnInit, OnDestroy {
-  thead = [
-    { name: 'Соревнование', width: '26%' },
-    { name: 'Дата матча', width: '26%' },
-    { name: 'Дом', width: '18%' },
-    { name: 'Гость', width: '18%' },
-    { name: 'Счет', width: '12%' },
+  displayedColumns: string[] = [
+    'competitionName',
+    'date',
+    'homeTeamName',
+    'awayTeamName',
+    'score',
   ];
 
-  matches$: Observable<MatchModel[]> = this.store.matchesTeam$;
+  matches!: MatchModel[];
   teamName$: Observable<string> = this.store.teamName$;
   id!: string;
 
@@ -30,7 +32,8 @@ export class TeamCalendarPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private api: AppApiService,
     private store: AppStoreService,
-    private router: Router
+    private router: Router,
+    private preloaderService: PreloaderService,
   ) {
   }
 
@@ -38,19 +41,27 @@ export class TeamCalendarPageComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(switchMap(params => {
         this.id = params.id;
-        return this.api.getCurrentTeam(this.id)
+        return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentTeam(this.id));
       }))
-      .subscribe(() => this.store.toggleIsFetching());
+      .subscribe();
+    this.store.matchesTeam$
+      .pipe(
+        tap(result => this.matches = result),
+      )
+      .subscribe();
   }
 
   startFilter(formData: MyFormData) {
     this.id &&
-    this.api.getCurrentTeam(this.id, formData)
-      .subscribe(() => {
-          this.router.navigate(['/teams', this.id], { queryParams: formData });
-          this.store.toggleIsFetching();
-        },
-      );
+    this.preloaderService
+      .showPreloaderUntilComplete(this.api.getCurrentTeam(this.id, formData)
+        .pipe(
+          tap(
+            () => {
+              this.router.navigate(['/teams', this.id], { queryParams: formData });
+            },
+          ),
+        )).subscribe();
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { PreloaderService } from './preloader.service';
 
 @Component({
   selector: 'app-preloader',
@@ -6,11 +7,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./preloader.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreloaderComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class PreloaderComponent {
+  constructor(public preloaderService: PreloaderService) {
   }
-
 }

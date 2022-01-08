@@ -8,11 +8,16 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 })
 export class InputComponent {
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>();
-  searchStr = '';
+  value: string = '';
 
   constructor() { }
 
-  onClick() {
-    this.onSearch.emit(this.searchStr);
+  search() {
+    this.onSearch.emit(this.value);
+  }
+
+  clear() {
+    this.value = ''
+    this.search();
   }
 }

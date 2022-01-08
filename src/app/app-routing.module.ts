@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
+
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { CompetitionsPageComponent } from './competitions-page/competitions-page.component';
 import { CompetitionCalendarPageComponent } from './competitions-page/competition-calendar-page/competition-calendar-page.component';
 import { TeamsPageComponent } from './teams-page/teams-page.component';
@@ -37,8 +38,8 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: '/error'
-      }
+        redirectTo: '/error',
+      },
     ],
   },
 ];
