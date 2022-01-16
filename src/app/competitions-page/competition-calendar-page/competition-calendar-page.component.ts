@@ -33,12 +33,12 @@ export class CompetitionCalendarPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.route.params
-      .pipe(switchMap(params => {
-        this.id = params.id;
-        return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentCompetition(this.id));
-      }))
-      .subscribe();
+    // this.route.params
+    //   .pipe(switchMap(params => {
+    //     this.id = params.id;
+    //     return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentCompetition(this.id));
+    //   }))
+    //   .subscribe();
     this.store.matchesComp$
       .pipe(
         tap(result => this.matches = result),

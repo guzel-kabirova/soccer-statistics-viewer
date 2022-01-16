@@ -38,12 +38,12 @@ export class TeamCalendarPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.route.params
-      .pipe(switchMap(params => {
-        this.id = params.id;
-        return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentTeam(this.id));
-      }))
-      .subscribe();
+    // this.route.params
+    //   .pipe(switchMap(params => {
+    //     this.id = params.id;
+    //     return this.preloaderService.showPreloaderUntilComplete(this.api.getCurrentTeam(this.id));
+    //   }))
+    //   .subscribe();
     this.store.matchesTeam$
       .pipe(
         tap(result => this.matches = result),

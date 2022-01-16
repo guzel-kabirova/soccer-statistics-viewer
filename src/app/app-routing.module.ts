@@ -7,6 +7,8 @@ import { CompetitionCalendarPageComponent } from './competitions-page/competitio
 import { TeamsPageComponent } from './teams-page/teams-page.component';
 import { TeamCalendarPageComponent } from './teams-page/team-calendar-page/team-calendar-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { CompetitionCalendarPageResolver } from './competitions-page/competition-calendar-page/competition-calendar-page.resolver';
+import { TeamCalendarPageResolver } from './teams-page/team-calendar-page/team-calendar-page.resolver';
 
 const routes: Routes = [
   {
@@ -23,6 +25,9 @@ const routes: Routes = [
       {
         path: 'competitions/:id',
         component: CompetitionCalendarPageComponent,
+        resolve: {
+          competition: CompetitionCalendarPageResolver
+        }
       },
       {
         path: 'teams',
@@ -31,6 +36,9 @@ const routes: Routes = [
       {
         path: 'teams/:id',
         component: TeamCalendarPageComponent,
+        resolve: {
+          team: TeamCalendarPageResolver
+        }
       },
       {
         path: 'error',
